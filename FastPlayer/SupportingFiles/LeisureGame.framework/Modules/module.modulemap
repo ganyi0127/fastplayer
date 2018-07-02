@@ -1,0 +1,6 @@
+framework module LeisureGame {
+  umbrella header "LeisureGame.h"
+
+  export *
+  module * { export * }
+}
