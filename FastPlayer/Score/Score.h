@@ -35,4 +35,8 @@
 -(PlayerType)getPlayerType;
 ///设置当前选择的角色
 -(PlayerType)setPlayerType:(PlayerType)playerType;
+
+
+///解锁玩家
+-(BOOL)unlockPlayer:(PlayerType)playerType;
 @end

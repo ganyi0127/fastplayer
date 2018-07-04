@@ -17,6 +17,7 @@
 #import "SonamButton.h"
 #import "Score.h"
 #import "TimeNode.h"
+#import "ItemButton.h"
 
 @implementation GameScene {
     Player *_player;
@@ -25,6 +26,8 @@
     Score *_score;
     Config *_config;
     TimeNode *_timeNode;
+    ItemButton *_coinItemButton;
+    ItemButton *_scoreItemButton;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -120,6 +123,21 @@
         }
     };
     [self addChild:menuButton];
+    
+    CGFloat itemButtonPosX = _config.screenRight - 200;
+    
+    //添加金币按钮
+    _coinItemButton = [ItemButton nodeWithButtonType:ItemButtonTypeCoins];
+    _coinItemButton.position = CGPointMake(itemButtonPosX, _config.screenTop - 120);
+    NSInteger coins = [_score getCoins];
+    [_coinItemButton setNumber:coins];
+    [self addChild:_coinItemButton];
+    
+    //添加分数按钮
+    _scoreItemButton = [ItemButton nodeWithButtonType:ItemButtonTypeScore];
+    _scoreItemButton.position = CGPointMake(itemButtonPosX, _coinItemButton.position.y - 150);
+    [_scoreItemButton setNumber:0];
+    [self addChild:_scoreItemButton];
 }
 
 //重置
@@ -129,7 +147,7 @@
     [_timeNode reset];    
 }
 
-//
+//开始/暂停游戏
 -(void)startGame:(BOOL)isRun{    
     if (_isOver) {
         [self restartGame];
@@ -157,7 +175,7 @@
     }
 }
 
-
+#pragma mark 更新
 -(void)update:(CFTimeInterval)currentTime {
     // Called before each frame is rendered
 }

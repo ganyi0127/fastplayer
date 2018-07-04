@@ -72,6 +72,12 @@
 		B89DEEC220EA13B200A505D0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEC120EA13B200A505D0 /* libc++.tbd */; };
 		B89DEEC420EA13BC00A505D0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEC320EA13BC00A505D0 /* libresolv.tbd */; };
 		B89DEEC820EA7AED00A505D0 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEC720EA7AED00A505D0 /* Item.m */; };
+		B89DEECC20EB354A00A505D0 /* PlayerSel.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEECB20EB354A00A505D0 /* PlayerSel.m */; };
+		B89DEECF20EB36CE00A505D0 /* PlayerIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEECE20EB36CE00A505D0 /* PlayerIcon.m */; };
+		B89DEED220EB50D900A505D0 /* ItemButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEED120EB50D900A505D0 /* ItemButton.m */; };
+		B89DEED620EB6E4C00A505D0 /* ShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEED520EB6E4C00A505D0 /* ShareButton.m */; };
+		B89DEEDA20ECFE1E00A505D0 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEED920ECFE1E00A505D0 /* Session.m */; };
+		B89DEEE020ECFF8400A505D0 /* Session+Post.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEDF20ECFF8400A505D0 /* Session+Post.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +215,18 @@
 		B89DEEC320EA13BC00A505D0 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		B89DEEC620EA7AED00A505D0 /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		B89DEEC720EA7AED00A505D0 /* Item.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		B89DEECA20EB354A00A505D0 /* PlayerSel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSel.h; sourceTree = "<group>"; };
+		B89DEECB20EB354A00A505D0 /* PlayerSel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSel.m; sourceTree = "<group>"; };
+		B89DEECD20EB36CE00A505D0 /* PlayerIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerIcon.h; sourceTree = "<group>"; };
+		B89DEECE20EB36CE00A505D0 /* PlayerIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerIcon.m; sourceTree = "<group>"; };
+		B89DEED020EB50D900A505D0 /* ItemButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemButton.h; sourceTree = "<group>"; };
+		B89DEED120EB50D900A505D0 /* ItemButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemButton.m; sourceTree = "<group>"; };
+		B89DEED420EB6E4C00A505D0 /* ShareButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareButton.h; sourceTree = "<group>"; };
+		B89DEED520EB6E4C00A505D0 /* ShareButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareButton.m; sourceTree = "<group>"; };
+		B89DEED820ECFE1E00A505D0 /* Session.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
+		B89DEED920ECFE1E00A505D0 /* Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
+		B89DEEDE20ECFF8400A505D0 /* Session+Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Session+Post.h"; sourceTree = "<group>"; };
+		B89DEEDF20ECFF8400A505D0 /* Session+Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Session+Post.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +295,7 @@
 			children = (
 				B89DEDF120E8AA7300A505D0 /* JPUSH */,
 				B89DEDF820E8AA7400A505D0 /* UMENG */,
+				B89DEED720ECFDFF00A505D0 /* NetWork */,
 				B89DEE9F20E8D30700A505D0 /* InBall */,
 				B89DEEB420E9253200A505D0 /* InTime */,
 				B89DEE2E20E8BFCA00A505D0 /* InPalyer */,
@@ -521,6 +540,8 @@
 			children = (
 				B89DEE2B20E8BBAA00A505D0 /* MenuNode.h */,
 				B89DEE2C20E8BBAA00A505D0 /* MenuNode.m */,
+				B89DEED320EB6E3800A505D0 /* Share */,
+				B89DEEC920EB353400A505D0 /* PlayerSel */,
 			);
 			path = InMenu;
 			sourceTree = "<group>";
@@ -551,6 +572,8 @@
 				B89DEE2120E8ADBC00A505D0 /* SonamButton.m */,
 				B89DEE2020E8ADBC00A505D0 /* Config.h */,
 				B89DEE2220E8ADBC00A505D0 /* Config.m */,
+				B89DEED020EB50D900A505D0 /* ItemButton.h */,
+				B89DEED120EB50D900A505D0 /* ItemButton.m */,
 				B89DEE2920E8BB0800A505D0 /* SonamNumberLabel.h */,
 				B89DEE2820E8BB0800A505D0 /* SonamNumberLabel.m */,
 			);
@@ -628,6 +651,37 @@
 				B89DEEC720EA7AED00A505D0 /* Item.m */,
 			);
 			path = InItem;
+			sourceTree = "<group>";
+		};
+		B89DEEC920EB353400A505D0 /* PlayerSel */ = {
+			isa = PBXGroup;
+			children = (
+				B89DEECA20EB354A00A505D0 /* PlayerSel.h */,
+				B89DEECB20EB354A00A505D0 /* PlayerSel.m */,
+				B89DEECD20EB36CE00A505D0 /* PlayerIcon.h */,
+				B89DEECE20EB36CE00A505D0 /* PlayerIcon.m */,
+			);
+			path = PlayerSel;
+			sourceTree = "<group>";
+		};
+		B89DEED320EB6E3800A505D0 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				B89DEED420EB6E4C00A505D0 /* ShareButton.h */,
+				B89DEED520EB6E4C00A505D0 /* ShareButton.m */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		B89DEED720ECFDFF00A505D0 /* NetWork */ = {
+			isa = PBXGroup;
+			children = (
+				B89DEED820ECFE1E00A505D0 /* Session.h */,
+				B89DEED920ECFE1E00A505D0 /* Session.m */,
+				B89DEEDE20ECFF8400A505D0 /* Session+Post.h */,
+				B89DEEDF20ECFF8400A505D0 /* Session+Post.m */,
+			);
+			path = NetWork;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -770,6 +824,7 @@
 				B89DEEAD20E8EBCB00A505D0 /* GroundNode.m in Sources */,
 				B89DED7420E8A9A900A505D0 /* GameScene.m in Sources */,
 				B89DEDDE20E8AA4F00A505D0 /* AFNetworkReachabilityManager.m in Sources */,
+				B89DEEDA20ECFE1E00A505D0 /* Session.m in Sources */,
 				B89DEDE720E8AA4F00A505D0 /* ViewController+MASAdditions.m in Sources */,
 				B89DED7720E8A9A900A505D0 /* GameViewController.m in Sources */,
 				B89DEE2A20E8BB0800A505D0 /* SonamNumberLabel.m in Sources */,
@@ -789,8 +844,12 @@
 				B89DEE2620E8ADBC00A505D0 /* SonamButton.m in Sources */,
 				B89DEDEB20E8AA4F00A505D0 /* NSArray+MASAdditions.m in Sources */,
 				B89DEDE820E8AA4F00A505D0 /* MASCompositeConstraint.m in Sources */,
+				B89DEECC20EB354A00A505D0 /* PlayerSel.m in Sources */,
 				B89DEEB720E9E7A600A505D0 /* TimeNode.m in Sources */,
+				B89DEECF20EB36CE00A505D0 /* PlayerIcon.m in Sources */,
+				B89DEEE020ECFF8400A505D0 /* Session+Post.m in Sources */,
 				B89DED6D20E8A9A900A505D0 /* AppDelegate.m in Sources */,
+				B89DEED620EB6E4C00A505D0 /* ShareButton.m in Sources */,
 				B89DEDDA20E8AA4F00A505D0 /* AFURLResponseSerialization.m in Sources */,
 				B89DEDED20E8AA4F00A505D0 /* MASConstraint.m in Sources */,
 				B89DEDE220E8AA4F00A505D0 /* SVProgressHUD.m in Sources */,
@@ -798,6 +857,7 @@
 				B89DEE2520E8ADBC00A505D0 /* Score.m in Sources */,
 				B89DEDDD20E8AA4F00A505D0 /* AFURLRequestSerialization.m in Sources */,
 				B89DEE3120E8BFDB00A505D0 /* Player.m in Sources */,
+				B89DEED220EB50D900A505D0 /* ItemButton.m in Sources */,
 				B89DEEB020E8EC4400A505D0 /* Ground.m in Sources */,
 				B89DEEA920E8D50D00A505D0 /* ControllerButton.m in Sources */,
 				B89DEEB320E8ECC000A505D0 /* GroundNet.m in Sources */,

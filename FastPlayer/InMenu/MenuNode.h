@@ -17,4 +17,8 @@
 
 ///显示/隐藏
 -(BOOL)show:(BOOL)isShow;
+
+//选择操作
+-(void)selectPlayerByDirection:(BOOL)isLeftDirection;
+
 @end

@@ -14,6 +14,7 @@
     NSString *_scoreKey;
     NSString *_coinsKey;
     NSString *_playerTypeKey;
+    NSString *_unlockplayersKey;
 }
 
 static Score *_instance = nil;  
@@ -38,6 +39,8 @@ static Score *_instance = nil;
 - (void)config{
     _scoreKey = @"score";
     _coinsKey = @"coins";
+    _unlockplayersKey = @"unlockplayers";
+    
     _playerTypeKey = @"playertype";
     
     _fileName = @"Score";
@@ -149,5 +152,47 @@ static Score *_instance = nil;
     [dic setObject:object forKey:_playerTypeKey];
     [dic writeToFile:[self documentPath] atomically:YES];
     return playerType;
+}
+
+
+#pragma mark 解锁角色
+- (BOOL)unlockPlayer:(PlayerType)playerType{
+    NSInteger icons = [self getCoins];
+    NSInteger price = [self getPriceFromPlayerType:playerType];
+    if (icons < price) {
+        return NO;
+    }
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self readDocument]];
+    NSMutableArray<NSNumber*> *unlockplayerList = [NSMutableArray arrayWithArray:(NSArray*)[dic objectForKey:_unlockplayersKey]];
+    
+    //判断是否已解锁
+    if ([unlockplayerList containsObject:[NSNumber numberWithInteger:playerType]]) {
+        return NO;
+    }
+    
+    [unlockplayerList addObject:[NSNumber numberWithInteger:playerType]];
+    [dic setObject:unlockplayerList forKey:_unlockplayersKey];
+    
+    BOOL result = [dic writeToFile:[self documentPath] atomically:YES];    
+    return result;
+}
+
+//获取对应角色价格
+-(NSInteger)getPriceFromPlayerType:(PlayerType)playerType{
+    switch (playerType) {
+        case PlayerTypeNormal:
+            return 0;
+        case PlayerTypeTimer:
+            return 200;
+        case PlayerTypeTwins:
+            return 1000;
+        case PlayerTypeGolder:
+            return 3000;
+        case PlayerTypeTrickster:
+            return 8000;
+        default:
+            return 0;
+    }
 }
 @end
