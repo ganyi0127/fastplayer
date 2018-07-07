@@ -70,7 +70,7 @@ static Config* _instance = nil;
         _screenRight = _screenSize.width / 2;
     }
     
-    _menuSize = CGSizeMake(_screenSize.width, _screenSize.height - _screenSize.width / 2);
+    _menuSize = CGSizeMake(_screenSize.width * 0.95, _screenSize.height - _screenSize.width / 2);
     
     _shotPosition = CGPointMake(0, -900);  
     _ballPosition = CGPointMake(0, -900);

@@ -28,6 +28,9 @@
     TimeNode *_timeNode;
     ItemButton *_coinItemButton;
     ItemButton *_scoreItemButton;
+    
+    //记录当前分数
+    NSInteger _curScore;    
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -45,6 +48,8 @@
 }
 
 -(void)createContents{
+    __weak __typeof (self) weakSelf = self;
+    
     _groundNode = [GroundNode node];
     [self addChild:_groundNode];
     
@@ -55,8 +60,9 @@
     //__weak Player *weakPlayer = _player;
     controller.completeBlock = ^(BOOL isLeft) {         //操作移动  
         //判断是否已开启游戏
-        if (!_isStart) {
+        if (!self.isStart) {
             //控制菜单
+            [menuNode selectPlayerByDirection:isLeft];
             return;
         }
         
@@ -67,8 +73,16 @@
         }
         
         NSInteger stepsWillTake = 1;
+        
+        //添加分数
+        self->_curScore += stepsWillTake;
+        [self->_scoreItemButton setNumber:self->_curScore];
+        
+        
+        //移动背景
         [self->_groundNode takeStep:stepsWillTake];
                 
+        //移动角色
         NSInteger columnOffset = isLeft ? -1 : 1;
         [self->_player moveToColumnOffset:columnOffset withCompletion:^(NSInteger newColumnIndex, NSInteger newRowIndex) {
             //检查碰撞
@@ -107,15 +121,22 @@
     _timeNode.completeBlock = ^(BOOL stop, NSInteger curTime) {
         if (stop) {
             //结束
+            self->_isOver = YES;                        
+            
+            //存储分数
+            [self->_score setScore:self->_curScore];            
+            
+            //打开菜单
+            [menuNode autoShow];            
         }
     };
     [self addChild:_timeNode];    
     
-    __weak __typeof (self) weakSelf = self;
+    
     
     //添加菜单按钮
-    SonamButton *menuButton = [SonamButton button:@[[SKTexture textureWithImageNamed:@""]]];
-    menuButton.position = CGPointMake(_config.screenLeft + 50, _config.screenTop - 120);
+    SonamButton *menuButton = [SonamButton button:@[[SKTexture textureWithImageNamed:@"btn_menu"]]];
+    menuButton.position = CGPointMake(_config.screenLeft + 120, _config.screenTop - 150);
     menuButton.completeBlock = ^(Boolean enable) {
         if (enable) {
             BOOL isMenuHidden = [menuNode autoShow];
@@ -144,6 +165,7 @@
 -(void)restartGame{
     _isOver = NO;
     _isStart = YES;
+    _curScore = 0;
     [_timeNode reset];    
 }
 
@@ -177,7 +199,7 @@
 
 #pragma mark 更新
 -(void)update:(CFTimeInterval)currentTime {
-    // Called before each frame is rendered
+    
 }
 
 @end

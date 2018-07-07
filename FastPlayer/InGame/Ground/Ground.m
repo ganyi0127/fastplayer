@@ -20,7 +20,9 @@
 
 - (instancetype)initWithGroundType:(GroundType)groundType
 {
-    SKTexture *texture = [SKTexture textureWithImageNamed:@""];
+    NSInteger random = (NSInteger)(arc4random_uniform(5));
+    NSString *textureName = [NSString stringWithFormat:@"bg_%ld", random];
+    SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
     SKColor *color = [SKColor clearColor];
     CGSize size = [[GroundNet shareInstance] getGroundSize];
     

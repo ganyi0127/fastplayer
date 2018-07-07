@@ -39,4 +39,10 @@
 
 ///解锁玩家
 -(BOOL)unlockPlayer:(PlayerType)playerType;
+
+
+///获取玩家名
+-(NSString*)getUsername;
+///更新玩家名
+-(BOOL)setUsername:(NSString *)username;
 @end

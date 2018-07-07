@@ -12,4 +12,7 @@
 
 @property(nonatomic, assign) BOOL isOver;
 @property (assign, nonatomic) BOOL isStart;
+
+-(void)startGame:(BOOL)isRun;
+
 @end

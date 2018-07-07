@@ -47,7 +47,7 @@ static GroundNet *_instance = nil;
     _config = [Config shareInstance];
     
     _playerColumnIndex = _columnCount / 2;
-    _playerRowIndex = 4;
+    _playerRowIndex = 6;
     _playerTwinsRowIndex = _playerRowIndex + 2;
 }
 

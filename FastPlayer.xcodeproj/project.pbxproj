@@ -65,7 +65,7 @@
 		B89DEEB020E8EC4400A505D0 /* Ground.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEAF20E8EC4400A505D0 /* Ground.m */; };
 		B89DEEB320E8ECC000A505D0 /* GroundNet.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEB220E8ECC000A505D0 /* GroundNet.m */; };
 		B89DEEB720E9E7A600A505D0 /* TimeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEB620E9E7A600A505D0 /* TimeNode.m */; };
-		B89DEEBA20EA137100A505D0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEB920EA137100A505D0 /* CFNetwork.framework */; };
+		B89DEEBA20EA137100A505D0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEB920EA137100A505D0 /* CFNetwork.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B89DEEBC20EA137800A505D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEBB20EA137800A505D0 /* SystemConfiguration.framework */; };
 		B89DEEBE20EA139800A505D0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEBD20EA139800A505D0 /* CoreTelephony.framework */; };
 		B89DEEC020EA13A600A505D0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89DEEBF20EA13A600A505D0 /* UserNotifications.framework */; };
@@ -78,6 +78,7 @@
 		B89DEED620EB6E4C00A505D0 /* ShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEED520EB6E4C00A505D0 /* ShareButton.m */; };
 		B89DEEDA20ECFE1E00A505D0 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEED920ECFE1E00A505D0 /* Session.m */; };
 		B89DEEE020ECFF8400A505D0 /* Session+Post.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEDF20ECFF8400A505D0 /* Session+Post.m */; };
+		B89DEEEE20F0B9C800A505D0 /* BuyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEED20F0B9C800A505D0 /* BuyButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +228,8 @@
 		B89DEED920ECFE1E00A505D0 /* Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
 		B89DEEDE20ECFF8400A505D0 /* Session+Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Session+Post.h"; sourceTree = "<group>"; };
 		B89DEEDF20ECFF8400A505D0 /* Session+Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Session+Post.m"; sourceTree = "<group>"; };
+		B89DEEEC20F0B9C800A505D0 /* BuyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuyButton.h; sourceTree = "<group>"; };
+		B89DEEED20F0B9C800A505D0 /* BuyButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuyButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -660,6 +663,8 @@
 				B89DEECB20EB354A00A505D0 /* PlayerSel.m */,
 				B89DEECD20EB36CE00A505D0 /* PlayerIcon.h */,
 				B89DEECE20EB36CE00A505D0 /* PlayerIcon.m */,
+				B89DEEEC20F0B9C800A505D0 /* BuyButton.h */,
+				B89DEEED20F0B9C800A505D0 /* BuyButton.m */,
 			);
 			path = PlayerSel;
 			sourceTree = "<group>";
@@ -820,6 +825,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B89DEEEE20F0B9C800A505D0 /* BuyButton.m in Sources */,
 				B89DEEC820EA7AED00A505D0 /* Item.m in Sources */,
 				B89DEEAD20E8EBCB00A505D0 /* GroundNode.m in Sources */,
 				B89DED7420E8A9A900A505D0 /* GameScene.m in Sources */,

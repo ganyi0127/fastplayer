@@ -22,18 +22,32 @@
 
 - (instancetype)initWithDirection:(BOOL)leftDirection
 {
-    SKTexture *texture = [SKTexture textureWithImageNamed:@""];
-    self = [super initWithTexture:texture];
+    _config = [Config shareInstance];
+    
+    NSString *textureName = leftDirection ? @"btn_left" : @"btn_right";
+    SKTexture *texture = [SKTexture textureWithImageNamed:textureName];
+    CGFloat length = _config.screenRight - 8;
+    CGSize size = CGSizeMake(length, length);
+    
+    self = [super initWithTexture:texture color:SKColor.clearColor size:size];
     if (self) {
+        _normalTexture = texture;    
         _isLeftDirection = leftDirection;
+        
+        self.normalTexture = texture;
         [self config];
         [self createContents];
     }
     return self;
 }
 
+- (void)moveToParent:(SKNode *)parent{
+//    CGFloat scale = _config.screenRight/self.texture.size.width;
+//    [self setScale:scale];
+}
+
 -(void)config{
-    _config = [Config shareInstance];
+    
     [self setUserInteractionEnabled:YES];
     
     _normalTexture = self.texture;
@@ -44,10 +58,6 @@
 }
 
 -(void)createContents{
-    SKTexture *directionTexture = [SKTexture textureWithImageNamed:@""];
-    SKSpriteNode *directionNode = [SKSpriteNode spriteNodeWithTexture:directionTexture];
-    directionNode.xScale = _isLeftDirection ? 1 : -1;
-    [self addChild:directionNode];
 }
 
 

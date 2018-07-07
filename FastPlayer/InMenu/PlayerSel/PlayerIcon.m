@@ -11,6 +11,7 @@
 
 @implementation PlayerIcon{
     Score *_score;
+    NSMutableArray<SKTexture*> *_textures;
 }
 
 + (PlayerIcon *)nodeWithPlayerType:(PlayerType)playerType{
@@ -19,8 +20,40 @@
 
 - (instancetype)initWithPlayerType:(PlayerType)playerType 
 {
-    self = [super init];
+    _textures = [NSMutableArray array];
+    NSString *textureName = @"";
+    NSInteger count = 2;
+    switch (playerType) {
+        case PlayerTypeNormal:
+            textureName = @"playerIcon_normal_";
+            break;            
+        case PlayerTypeGolder:
+            textureName = @"playerIcon_golder_";
+            break;
+        case PlayerTypeTimer:
+            textureName = @"playerIcon_timer_";
+            break;
+        case PlayerTypeTwins:
+            textureName = @"playerIcon_twins_";
+            count = 3;
+            break;
+        default:
+            textureName = @"playerIcon_trickster_";
+            break;
+    }
+    
+    for (NSInteger i=0; i<count; i++) {
+        NSString *name = [NSString stringWithFormat:@"%@%ld",textureName,i];
+        SKTexture *texture = [SKTexture textureWithImageNamed:name];
+        [_textures addObject:texture];
+    }
+    
+    
+    SKTexture *firstTexutre = [_textures firstObject];
+    self = [super initWithTexture:firstTexutre color:SKColor.clearColor size:firstTexutre.size];
+    
     if (self) {
+        
         [self config];
         [self createContents];
     }
@@ -29,6 +62,14 @@
 
 -(void)config{
     _score = [Score shareInstance];
+    
+//    CGFloat scale = 200 / self.texture.size.height;
+//    [self setScale:scale];
+    
+    //播放idle动画
+    SKAction *anim = [SKAction animateWithTextures:_textures timePerFrame:0.2 resize:false restore:true];
+    SKAction *forever = [SKAction repeatActionForever:anim];
+    [self runAction:forever];
 }
 
 -(void)createContents{

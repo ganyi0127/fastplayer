@@ -14,6 +14,7 @@
 #import "Score.h"
 #import "Player.h"
 #import "PlayerSel.h"
+#import "GameScene.h"
 
 @implementation MenuNode{
     Config *_config;    
@@ -46,7 +47,10 @@
 
 -(void)createContents{
     //添加背景
-    SKSpriteNode *bg = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@""]];
+    SKTexture *bgTexture = [SKTexture textureWithImageNamed:@"bg_menu"];
+    SKSpriteNode *bg = [SKSpriteNode spriteNodeWithTexture:bgTexture size:CGSizeMake(_menuSize.width, _menuSize.height)];
+    CGFloat scale = (_menuSize.width - 128)/bgTexture.size.width;
+    [bg setScale:scale];
     [self addChild:bg];
     
     //添加highscore
@@ -62,11 +66,13 @@
     __weak typeof (self)weakSelf = self;
     
     //添加开始按钮
-    _startButton = [SonamButton button:@[]];
-    _startButton.position = CGPointMake(0, bg.size.height / 2);
+    SKTexture *startTexture = [SKTexture textureWithImageNamed:@"btn_start"];
+    _startButton = [SonamButton button:@[startTexture]];
+    _startButton.position = CGPointMake(0, -bg.size.height / 2);
     _startButton.completeBlock = ^(Boolean enable) {
         if (enable) {
             [weakSelf show:false];
+            [(GameScene*)self.parent startGame:true];            
         }
     };
     [self addChild:_startButton];
@@ -85,12 +91,12 @@
 }
 
 - (void)selectPlayerByDirection:(BOOL)isLeftDirection{
-    
+    [_playerSel selectOffsetIndex:isLeftDirection ? -1 : 1];
 }
 
 #pragma mark 获取展示动画
 -(SKAction*)getShowAction:(BOOL)isShowAction{
-    NSTimeInterval duration = 0.5;
+    NSTimeInterval duration = 0.2;
     CGFloat moveY = [self getShowPosY:isShowAction];
     SKAction *move = [SKAction moveToY:moveY duration:duration];    
     move.timingMode = SKActionTimingEaseOut;
@@ -99,6 +105,6 @@
 
 #pragma mark 获取展示y轴位置
 -(CGFloat)getShowPosY:(BOOL)isShowPosY{
-    return isShowPosY ? _config.screenTop - _menuSize.height / 2 : _config.screenTop + _menuSize.height / 2; 
+    return isShowPosY ? _config.screenBottom + _config.screenRight + _menuSize.height / 2 : _config.screenTop + _menuSize.height / 2; 
 }
 @end

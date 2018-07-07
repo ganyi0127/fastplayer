@@ -15,6 +15,7 @@
     NSString *_coinsKey;
     NSString *_playerTypeKey;
     NSString *_unlockplayersKey;
+    NSString *_usernameKey;
 }
 
 static Score *_instance = nil;  
@@ -40,6 +41,7 @@ static Score *_instance = nil;
     _scoreKey = @"score";
     _coinsKey = @"coins";
     _unlockplayersKey = @"unlockplayers";
+    _usernameKey = @"username";
     
     _playerTypeKey = @"playertype";
     
@@ -94,7 +96,7 @@ static Score *_instance = nil;
 - (NSInteger)addScore:(NSInteger)subScore{
     NSMutableDictionary *dic = [self readDocument];
     NSInteger score;
-    if ((NSInteger)[dic valueForKey:_scoreKey] + subScore < 0) {
+    if (((NSInteger)[dic valueForKey:_scoreKey] + subScore) < 0) {
         score = 0;
     }else{        
         score = (NSInteger)[dic valueForKey:_scoreKey] + subScore;
@@ -138,6 +140,18 @@ static Score *_instance = nil;
     [dic setObject:[NSNumber numberWithInteger:coins] forKey:_coinsKey];
     [dic writeToFile:[self documentPath] atomically:YES];
     return coins;
+}
+
+#pragma mark 用户名
+- (NSString *)getUsername{
+    NSDictionary *dic = [self readDocument];
+    return ((NSNumber *)[dic objectForKey: _usernameKey]).stringValue;
+}
+
+- (BOOL)setUsername:(NSString *)username{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self readDocument]];
+    [dic setObject:username forKey:_usernameKey];
+    return [dic writeToFile:[self documentPath] atomically:YES];
 }
 
 #pragma mark 角色类型

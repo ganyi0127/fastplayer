@@ -37,7 +37,7 @@
     NSString *itemTextureName;
     switch (_type) {
         case ItemButtonTypeCoins:
-            itemTextureName = @"";
+            itemTextureName = @"item_coin";
             break;
         case ItemButtonTypeScore:
             itemTextureName = @"";
@@ -64,6 +64,7 @@
     //更新位置
     [self updateChildrens];
 }
+
 
 //更新所有子对象
 -(void)updateChildrens{
