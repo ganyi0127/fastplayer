@@ -31,7 +31,7 @@ static Config* _instance = nil;
 - (void)config{
     _screenSize = CGSizeMake(1242, 2208);
     _viewSize = [[UIScreen mainScreen] bounds].size;
-    _globeFontName = @"DINCondensed-Bold";
+    _globeFontName = @"Thonburi-Bold";
     
     _keyPathOfCardOriginList = @"cardOriginList";
     _keyPathOfPlayCardOriginList = @"playCardOriginList";

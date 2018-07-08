@@ -25,7 +25,7 @@ static GroundNet *_instance = nil;
 }  
 
 + (GroundNet *)groundNet{
-    return [[self alloc] initWithColumnCount:7 withRowCount:16];
+    return [[self alloc] initWithColumnCount:7 withRowCount:18];
 }
 
 + (GroundNet *)groundNetWithColumnCount:(NSInteger)columnCount withRowCount:(NSInteger)rowCount{

@@ -74,6 +74,18 @@
     [self checkGrounds];    
 }
 
+- (void)reset{
+    for (NSMutableArray<Ground*> *grounds in _groundsList) {
+        for (Ground *ground in grounds) {
+            [ground removeFromParent];
+        }
+        [grounds removeAllObjects];
+    }
+    [_groundsList removeAllObjects];
+    
+    [self checkGrounds];
+}
+
 - (Ground *)getGroundByColumnIndex:(NSInteger)columnIndex byRowIndex:(NSInteger)rowIndex{
     return [[_groundsList objectAtIndex:rowIndex] objectAtIndex:columnIndex];
 }
@@ -116,7 +128,7 @@
     NSInteger curRow = _groundsList.count;
     
     for (int i=0; i<_groundNet.columnCount; i++) {
-        GroundType groundType = _groundsList.count < 6 ? GroundTypeNone : [self getRandomGroundType];
+        GroundType groundType = _groundsList.count < 10 ? GroundTypeNone : [self getRandomGroundType];
         Ground *ground = [Ground nodeWithGroundType:groundType];
         ground.position = [_groundNet getGroundPositionByColumnIndex:i byRowIndex:curRow];
         [groundList addObject:ground];

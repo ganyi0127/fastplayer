@@ -11,7 +11,8 @@
 typedef NS_OPTIONS(NSUInteger, SonamButtonType) {
     SonamButtonTypeNormal       = 1 << 0,
     SonamButtonTypeHighLighted  = 1 << 1,
-    SonamButtonTypeDisable      = 1 << 2
+    SonamButtonTypeDisable      = 1 << 2,
+    SonamButtonTypeSelected     = 1 << 3
 };
 
 @interface SonamButton : SKSpriteNode
@@ -19,6 +20,11 @@ typedef NS_OPTIONS(NSUInteger, SonamButtonType) {
 @property (assign, nonatomic) NSString *title;
 @property (assign, nonatomic) Boolean isEnable;
 @property (copy, nonatomic) void (^completeBlock)(Boolean enable);
+
+///是否为可选中
+@property (assign, nonatomic) BOOL canSelected;
+///判断是否选中
+@property (assign, nonatomic, readonly) BOOL isSelected;
 
 + (SonamButton*)button: (NSArray<SKTexture*>*)textures;
 - (id)init: (NSArray *)textures;

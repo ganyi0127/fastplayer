@@ -51,7 +51,9 @@
     [self setUserInteractionEnabled:YES];
     
     _normalTexture = self.texture;
-    _touchTexture = [SKTexture textureWithImageNamed:@""];
+    
+    NSString *touchTextureName = _isLeftDirection ? @"btn_left_highlight" : @"btn_right_highlight";
+    _touchTexture = [SKTexture textureWithImageNamed:touchTextureName];
     
     CGFloat x = _isLeftDirection ? _config.screenLeft / 2 : _config.screenRight / 2;
     self.position = CGPointMake(x, 0);
@@ -81,7 +83,7 @@
 #pragma mark 触摸事件
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     self.texture = _touchTexture;
-    [self runAction:[self getScaleOutAction]];
+    //[self runAction:[self getScaleOutAction]];
     
     //点击回调
     _completeBlock(_isLeftDirection);
@@ -89,11 +91,11 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     self.texture = _normalTexture;
-    [self runAction:[self getScaleInAction]];
+    //[self runAction:[self getScaleInAction]];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     self.texture = _normalTexture;
-    [self runAction:[self getScaleInAction]];
+    //[self runAction:[self getScaleInAction]];
 }
 @end

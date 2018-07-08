@@ -31,6 +31,7 @@
     
     //记录当前分数
     NSInteger _curScore;    
+    
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -68,11 +69,14 @@
         
         
         //判断是否可以移动
-        if (![self->_groundNet canPlayerMoveBySteps:isLeft ? -1 : 1]) {
+        if (![self->_groundNet canPlayerMoveBySteps:isLeft ? -1 : 1] || !(self->_player.canMove)) {
             return;
         }
         
         NSInteger stepsWillTake = 1;
+        
+        //添加时间（每走一步增加时间）
+        [self->_timeNode addTime:1];
         
         //添加分数
         self->_curScore += stepsWillTake;
@@ -89,19 +93,31 @@
             Ground *ground = [self->_groundNode getGroundByColumnIndex:newColumnIndex byRowIndex:newRowIndex];
             [ground triggerObjectByPlayerType:self->_player.type withCompletion:^(TriggerType triggerType) {
                 switch (triggerType) {
-                    case TriggerTypeTimer:              //获取时间                        
+                    case TriggerTypeTimer:              //获取时间   
+                        [self->_timeNode addTime:2];
                         break;
                     case TriggerTypeDoubleTimer:        //获取双倍时间
+                        [self->_timeNode addTime:4];
                         break;
                     case TriggerTypeTwins:              //分身
                         break;
                     case TriggerTypeGolder:             //获取金币
+                    {
+                        NSInteger coin = [_score addCoins:1];
+                        [self->_coinItemButton setNumber:coin];
+                    }
                         break;
                     case TriggerTypeDoubleGolder:       //获取双倍金币
+                    {
+                        NSInteger coin = [_score addCoins:2];
+                        [self->_coinItemButton setNumber:coin];
+                    }
                         break;
                     case TriggerTypeMainDead:           //主体死亡
+                        [weakSelf shakeByCount:6];
                         break;
                     case TriggerTypeTwinsDead:          //分身死亡
+                        [weakSelf shakeByCount:3];
                         break;
                     default:                            //无
                         break;
@@ -121,13 +137,14 @@
     _timeNode.completeBlock = ^(BOOL stop, NSInteger curTime) {
         if (stop) {
             //结束
-            self->_isOver = YES;                        
             
             //存储分数
             [self->_score setScore:self->_curScore];            
             
             //打开菜单
-            [menuNode autoShow];            
+            BOOL isMenuHidden = [menuNode autoShow];            
+            [weakSelf startGame:isMenuHidden];
+            self->_isOver = YES;                        
         }
     };
     [self addChild:_timeNode];    
@@ -139,6 +156,10 @@
     menuButton.position = CGPointMake(_config.screenLeft + 120, _config.screenTop - 150);
     menuButton.completeBlock = ^(Boolean enable) {
         if (enable) {
+            //存储分数
+            [self->_score setScore:self->_curScore]; 
+            
+            //控制菜单
             BOOL isMenuHidden = [menuNode autoShow];
             [weakSelf startGame:isMenuHidden];
         }
@@ -161,6 +182,25 @@
     [self addChild:_scoreItemButton];
 }
 
+///场景抖动
+-(void)shakeByCount:(NSInteger)count{
+    NSMutableArray<SKAction*> *actions = [NSMutableArray array];
+            
+    for (NSInteger i=0; i<count; i++) {        
+        NSTimeInterval duration = 0.05 + 0.03 * (CGFloat)i;
+        SKAction *scaleOut = [SKAction scaleTo:1.1 duration:duration];
+        scaleOut.timingMode = SKActionTimingEaseInEaseOut;        
+        SKAction *scaleIn = [SKAction scaleTo:1 duration:duration];
+        scaleIn.timingMode = SKActionTimingEaseInEaseOut;
+        [actions addObjectsFromArray:@[scaleOut, scaleIn]];
+    }
+    
+    SKAction *seq = [SKAction sequence:actions];
+    [_groundNode runAction:seq completion:^{
+        
+    }];
+}
+
 //重置
 -(void)restartGame{
     _isOver = NO;
@@ -172,6 +212,7 @@
 //开始/暂停游戏
 -(void)startGame:(BOOL)isRun{    
     if (_isOver) {
+        [_groundNode reset];
         [self restartGame];
     }else{        
         _isStart = isRun;

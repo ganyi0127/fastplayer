@@ -11,6 +11,8 @@
 
 @implementation Player{
     GroundNet *_groundNet;
+    
+    NSMutableArray<SKTexture*> *_textures;
 }
 
 + (Player *)nodeWithType:(PlayerType)type{
@@ -19,8 +21,36 @@
 
 - (instancetype)initWithType:(PlayerType)type 
 {
-    SKTexture *texture = [SKTexture textureWithImageNamed:@""];
-    self = [super initWithTexture:texture];
+    NSString *textureName = @"";
+    NSInteger count = 2;
+    switch (type) {
+        case PlayerTypeNormal:
+            textureName = @"player_normal_";
+            break;
+        case PlayerTypeTimer:
+            textureName = @"player_timer_";
+            break;
+        case PlayerTypeTwins:
+            textureName = @"player_twins_";
+            break;
+        case PlayerTypeGolder:
+            textureName = @"player_golder_";
+            break;
+        default:
+            textureName = @"player_trickster_";
+            count = 3;
+            break;
+    }
+    
+    _textures = [NSMutableArray array];
+    for (NSInteger i=0; i<count; i++) {
+        NSString *name = [NSString stringWithFormat:@"%@%ld",textureName,i];
+        SKTexture *texture = [SKTexture textureWithImageNamed:name];
+        [_textures addObject:texture];
+    }
+    
+    SKTexture *firstTexture = [_textures firstObject];    
+    self = [super initWithTexture:firstTexture];
     if (self) {
         _type = type;
         [self config];
@@ -32,17 +62,24 @@
 -(void)config{
     _groundNet = [GroundNet shareInstance];
     
-    _isTwins = false;
+    _isTwins = NO;
+    _canMove = YES;
     
     [self moveToColumnOffset:0 withCompletion:NULL];
+    
+    //播放动画
+    SKAction *anim = [SKAction animateWithTextures:_textures timePerFrame:0.1 resize:NO restore:NO];
+    SKAction *forever = [SKAction repeatActionForever:anim];
+    [self runAction:forever];
 }
 
 -(void)createContents{
-    
 }
 
 - (void)moveToColumnOffset:(NSInteger)columnOffset withCompletion:(void (^)(NSInteger, NSInteger))completion{
-
+    _canMove = NO; 
+    
+    
     NSInteger newColumnIndex = _groundNet.playerColumnIndex + columnOffset;
     NSInteger newRowIndex = _isTwins ? _groundNet.playerTwinsRowIndex : _groundNet.playerRowIndex;
     _groundNet.playerColumnIndex = newColumnIndex;
@@ -57,6 +94,8 @@
     move.timingMode = SKActionTimingEaseOut;
     [self runAction:move];
     [self runAction:move completion:^{
+        self->_canMove = YES;
+        
         if (completion) {            
             completion(newColumnIndex, newRowIndex);
         }

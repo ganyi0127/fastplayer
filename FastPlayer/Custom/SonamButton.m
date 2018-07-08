@@ -46,6 +46,10 @@
 }
 
 - (void)config{    
+    _canSelected = NO;
+    _isSelected = NO;
+    
+    
     _hasTexture = NO;
     [self setIsEnable:YES];
     
@@ -85,7 +89,7 @@
                 [self setColor:[SKColor redColor]];
             }
             break;
-        default:
+        default:            //不可选状态||选中状态
             if (_textures != NULL && _textures.count > 0) {                
                 [self setTexture:[_textures lastObject]];
             }else {
@@ -100,14 +104,34 @@
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self setSonamButtonType:SonamButtonTypeNormal];
-    if (self.completeBlock) {
-        self.completeBlock(_isEnable);
+    if (_canSelected) {
+        _isSelected = !_isSelected;
+        if (_isSelected) {
+            [self setSonamButtonType:SonamButtonTypeSelected];
+        }else{
+            [self setSonamButtonType:SonamButtonTypeNormal];
+        }
+        if (self.completeBlock) {
+            self.completeBlock(_isSelected);
+        }
+    }else{        
+        [self setSonamButtonType:SonamButtonTypeNormal];
+        if (self.completeBlock) {
+            self.completeBlock(_isEnable);
+        }
     }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self setSonamButtonType:SonamButtonTypeNormal];
+    if (_canSelected) {
+        if (_isSelected) {
+            [self setSonamButtonType:SonamButtonTypeSelected];
+        }else{
+            [self setSonamButtonType:SonamButtonTypeNormal];
+        }
+    }else{        
+        [self setSonamButtonType:SonamButtonTypeNormal];
+    }
 }
 
 @end

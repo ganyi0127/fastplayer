@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger,PlayerType) {
 @property (weak, nonatomic, readonly) Player *twins;
 @property (assign, nonatomic, readonly) BOOL isTwins;
 @property (assign, nonatomic, readonly) PlayerType type;
+@property (assign, nonatomic, readonly) BOOL canMove;
 
 +(Player*)nodeWithType:(PlayerType)type;
 

@@ -17,4 +17,6 @@
 ///移动步数
 -(void)takeStep:(NSInteger)count;
 
+///重置
+-(void)reset;
 @end

@@ -39,7 +39,7 @@
 -(void)config{
     _config = [Config shareInstance];
     
-    _maxTime = 30;
+    _maxTime = 10;
     _curTime = _maxTime;
     _isCount = YES;
     
@@ -49,10 +49,10 @@
 }
 
 -(void)createContents{
-    SKTexture *mainTexture = [SKTexture textureWithImageNamed:@""];
+    SKTexture *mainTexture = [SKTexture textureWithImageNamed:@"time_back"];
     _mainNode = [SKSpriteNode spriteNodeWithTexture:mainTexture];    
     
-    _maskNode = [SKSpriteNode spriteNodeWithTexture:mainTexture];
+    _maskNode = [SKSpriteNode spriteNodeWithColor:SKColor.whiteColor size:mainTexture.size];
     _maskNode.anchorPoint = CGPointMake(0, 0.5);
     _maskNode.position = CGPointMake(-_maskNode.size.width / 2, 0);
     
@@ -61,8 +61,13 @@
     [cropNode addChild:_mainNode];
     [self addChild:cropNode];
     
+    //前层
+    SKTexture *frontTexture = [SKTexture textureWithImageNamed:@"time_front"];
+    SKSpriteNode *front = [SKSpriteNode spriteNodeWithTexture:frontTexture];
+    [self addChild:front];
+    
     //开始计时
-    [self startCount:!_isCount];
+    [self startCount:!_isCount];    
 }
 
 ///循环调用
@@ -78,8 +83,7 @@
 //修改遮罩
 -(void)updateMask{    
     CGFloat rate = (CGFloat)_curTime / (CGFloat)_maxTime;
-    SKAction *scaleX = [SKAction scaleXTo:rate duration:0.5];
-    scaleX.timingMode = SKActionTimingEaseOut;
+    SKAction *scaleX = [SKAction scaleXTo:rate duration:1];
     [_maskNode runAction:scaleX];
 }
 
@@ -128,6 +132,7 @@
 
 - (void)reset{
     _curTime = _maxTime;
+    [_maskNode setXScale:1];
     
     [self callBack];
 }
@@ -142,4 +147,5 @@
         [_timer setFireDate:[NSDate distantPast]];
     }
 }
+
 @end

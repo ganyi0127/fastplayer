@@ -93,7 +93,7 @@
     SKSpriteNode * number = [SKSpriteNode spriteNodeWithTexture: [_textureList objectAtIndex:digit]];
     number.color = _color;
     number.colorBlendFactor = _colorBlendFactor;
-    number.anchorPoint = CGPointMake(0.5, 0);
+    number.anchorPoint = CGPointMake(0.5, 0.5);
     number.name = numberName;
     [number setScale:_numberScale];
     [self addChild:number];

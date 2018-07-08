@@ -131,10 +131,11 @@ static Score *_instance = nil;
 - (NSInteger)addCoins:(NSInteger)subCoins{
     NSMutableDictionary *dic = [self readDocument];
     NSInteger coins;
-    if ((NSInteger)[dic valueForKey:_coinsKey] + subCoins < 0) {
+    NSInteger oldCoins = ((NSNumber*)[dic valueForKey:_coinsKey]).integerValue;
+    if (oldCoins + subCoins < 0) {
         coins = 0;
     }else{        
-        coins = (NSInteger)[dic valueForKey:_coinsKey] + subCoins;
+        coins = oldCoins + subCoins;
     }
     
     [dic setObject:[NSNumber numberWithInteger:coins] forKey:_coinsKey];
@@ -145,7 +146,7 @@ static Score *_instance = nil;
 #pragma mark 用户名
 - (NSString *)getUsername{
     NSDictionary *dic = [self readDocument];
-    return ((NSNumber *)[dic objectForKey: _usernameKey]).stringValue;
+    return (NSString *)[dic objectForKey: _usernameKey];
 }
 
 - (BOOL)setUsername:(NSString *)username{

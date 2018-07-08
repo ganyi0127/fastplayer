@@ -51,48 +51,51 @@
     }
     
     _item = [Item nodeWithGroundType:_type];
+    //_item.zPosition = 1;
     [self addChild:_item];
 }
 
 
 - (void)triggerObjectByPlayerType:(PlayerType)playerType withCompletion:(void (^)(TriggerType))complection{
-    switch (_type) {
-        case GroundTypeTimer:            
-            if (playerType==PlayerTypeTimer) {
-                complection(TriggerTypeDoubleTimer);
-            }else{ 
-                complection(TriggerTypeTimer);
-            }
-            break;
-        case GroundTypeTwins:
-            complection(TriggerTypeTwins);
-            break;
-        case GroundTypeGolder:
-            if (playerType==PlayerTypeGolder) {
-                complection(TriggerTypeDoubleGolder);
-            }else{
-                complection(TriggerTypeGolder);
-            }
-            break;
-        case GroundTypeTrap:
-            if (playerType==PlayerTypeTrickster) {
+    [_item clearWithPlayerType:playerType withCompleteBlock:^(BOOL completed) {
+        switch (self->_type) {
+            case GroundTypeTimer: 
+                if (playerType==PlayerTypeTimer) {
+                    complection(TriggerTypeDoubleTimer);
+                }else{ 
+                    complection(TriggerTypeTimer);
+                }
+                break;
+            case GroundTypeTwins:
+                complection(TriggerTypeTwins);
+                break;
+            case GroundTypeGolder:
+                if (playerType==PlayerTypeGolder) {
+                    complection(TriggerTypeDoubleGolder);
+                }else{
+                    complection(TriggerTypeGolder);
+                }
+                break;
+            case GroundTypeTrap:                
+                if (playerType==PlayerTypeTrickster) {
+                    complection(TriggerTypeNone);
+                }else if(playerType==PlayerTypeTwins){
+                    complection(TriggerTypeTwinsDead);
+                }else{
+                    complection(TriggerTypeMainDead);
+                }
+                break;
+            case GroundTypePlayer:
+                if(playerType==PlayerTypeTwins){
+                    complection(TriggerTypeTwinsDead);
+                }else{
+                    complection(TriggerTypeMainDead);
+                }
+                break;
+            default:            
                 complection(TriggerTypeNone);
-            }else if(playerType==PlayerTypeTwins){
-                complection(TriggerTypeTwinsDead);
-            }else{
-                complection(TriggerTypeMainDead);
-            }
-            break;
-        case GroundTypePlayer:
-            if(playerType==PlayerTypeTwins){
-                complection(TriggerTypeTwinsDead);
-            }else{
-                complection(TriggerTypeMainDead);
-            }
-            break;
-        default:            
-            complection(TriggerTypeNone);
-            break;
-    }
+                break;
+        }
+     }];
 }
 @end
