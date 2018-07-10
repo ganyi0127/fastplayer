@@ -42,9 +42,9 @@
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     SKView *skView = (SKView *)self.view;    
-    [skView presentScene:scene];
+    [skView presentScene:scene];  
     
-    skView.showsNodeCount = YES;
+    [skView setShowsNodeCount:YES];
 }
 
 - (BOOL)shouldAutorotate {

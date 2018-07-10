@@ -15,4 +15,6 @@
 
 -(void)startGame:(BOOL)isRun;
 
+///检查碰撞
+-(void)checkCollisionWithColumnIndex:(NSInteger)columnIndex withRowIndex:(NSInteger)rowIndex;
 @end

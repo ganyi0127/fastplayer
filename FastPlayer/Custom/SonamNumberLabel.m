@@ -18,14 +18,18 @@
     SKColor *_color;
     CGFloat _colorBlendFactor;
     CGFloat _intervalOfNumbers;
+    
+    CGFloat _numberHeight;
 }
 
-+ (SonamNumberLabel *)numberLabel{
-    return [[SonamNumberLabel alloc] init];
++ (SonamNumberLabel *)numberLabelWithNumberHeight:(CGFloat)numberHeight{
+    return [[SonamNumberLabel alloc] initWithNumberHeight:numberHeight];
 }
 
-- (instancetype)init
+- (instancetype)initWithNumberHeight:(CGFloat)numberHeight
 {
+    
+    _numberHeight = numberHeight;
     self = [super init];
     if (self) {
         [self config];
@@ -95,7 +99,7 @@
     number.colorBlendFactor = _colorBlendFactor;
     number.anchorPoint = CGPointMake(0.5, 0.5);
     number.name = numberName;
-    [number setScale:_numberScale];
+    [number setScale:_numberHeight / number.size.height];
     [self addChild:number];
     [number runAction:[self getShowAction]];
     [_numberList insertObject:number atIndex:index];

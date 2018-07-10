@@ -29,7 +29,7 @@
 
 - (instancetype)initWithRankingModel:(RankingModel *)rankingModel
 {
-    SKTexture *texture = [SKTexture textureWithImageNamed:@""];
+    SKTexture *texture = [SKTexture textureWithImageNamed:@"ranking_cell"];
     self = [super initWithTexture:texture];
     if (self) {
         _username = rankingModel.username;

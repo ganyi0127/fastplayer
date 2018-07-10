@@ -19,13 +19,13 @@
     NSString *textureName;
     switch (starType) {
         case StarTypeOne:
-            textureName = @"";
+            textureName = @"ranking_one";
             break;
         case StarTypeTwo:
-            textureName = @"";
+            textureName = @"ranking_two";
             break;            
         default:
-            textureName = @"";
+            textureName = @"ranking_three";
             break;
     }
     SKTexture *texture = [SKTexture textureWithImageNamed:textureName];

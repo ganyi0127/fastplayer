@@ -7,12 +7,17 @@
 //
 
 #import "BuyButton.h"
+#import "ItemButton.h"
+#import "Score.h"
 
-@implementation BuyButton
+@implementation BuyButton{
+    ItemButton *_itemButton;
+}
 
 + (instancetype)node{
     SKTexture *texture = [SKTexture textureWithImageNamed:@"btn_buy"];
-    return [[self alloc] init:@[texture]];
+    SKTexture *highLightTexture = [SKTexture textureWithImageNamed:@"btn_buy_selected"];
+    return [[self alloc] init:@[texture, highLightTexture]];
 }
 
 - (id)init:(NSArray *)textures{
@@ -20,9 +25,31 @@
     return self;
 }
 
+- (void)createContents{
+    [super createContents];
+    
+    //添加itemButton
+    _itemButton = [ItemButton nodeWithButtonType:ItemButtonTypeCoins];
+    _itemButton.position = CGPointMake(-self.size.width / 2 + 100, 20);
+    [self addChild:_itemButton];
+}
+
 
 - (void)changePlayerTypeOfPrice:(PlayerType)playerType{
+    _playerType = playerType;
     
+    NSInteger price = [[Score shareInstance] getPriceFromPlayerType:_playerType];
+    [_itemButton setNumber:price];
+}
+
+//重写选择方法
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {        
+    [self setSonamButtonType:SonamButtonTypeNormal];
+    if (self.completeBlock) {
+        
+        BOOL flag = [[Score shareInstance] unlockPlayer:_playerType];
+        self.completeBlock(flag);
+    }
 }
 
 @end

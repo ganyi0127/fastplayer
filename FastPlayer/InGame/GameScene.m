@@ -18,6 +18,7 @@
 #import "Score.h"
 #import "TimeNode.h"
 #import "ItemButton.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation GameScene {
     Player *_player;
@@ -28,10 +29,14 @@
     TimeNode *_timeNode;
     ItemButton *_coinItemButton;
     ItemButton *_scoreItemButton;
+    MenuNode *_menuNode;
     
     //记录当前分数
     NSInteger _curScore;    
     
+    
+    //音效
+    AVAudioPlayer *_audioPlayer;
 }
 
 - (void)didMoveToView:(SKView *)view {
@@ -46,6 +51,17 @@
     
     _isStart = NO;
     _isOver = NO;
+    
+
+    //播放背景音乐
+    NSURL *musicUrl = [[NSBundle mainBundle] URLForResource:@"music/music00.mp3" withExtension:NULL];
+    NSError *error = NULL;
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:musicUrl error:&error];
+    _audioPlayer.numberOfLoops = -1;
+    if (error == NULL) {        
+        [_audioPlayer prepareToPlay];
+        [_audioPlayer play];
+    }
 }
 
 -(void)createContents{
@@ -54,19 +70,31 @@
     _groundNode = [GroundNode node];
     [self addChild:_groundNode];
     
-    MenuNode *menuNode = [MenuNode node];
-    [self addChild:menuNode];
+    _menuNode = [MenuNode node];
+    [self addChild:_menuNode];
+    
+    [_menuNode setTextField:self];
     
     Controller *controller = [Controller node];
     //__weak Player *weakPlayer = _player;
     controller.completeBlock = ^(BOOL isLeft) {         //操作移动  
+        
+        
         //判断是否已开启游戏
         if (!self.isStart) {
             //控制菜单
-            [menuNode selectPlayerByDirection:isLeft];
+            [self->_menuNode selectPlayerByDirection:isLeft];
             return;
         }
         
+        
+        //播放音效
+        SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-07" waitForCompletion:NO];
+        [self runAction:sound];
+        
+        if (self.isOver) {
+            return;
+        }
         
         //判断是否可以移动
         if (![self->_groundNet canPlayerMoveBySteps:isLeft ? -1 : 1] || !(self->_player.canMove)) {
@@ -76,7 +104,7 @@
         NSInteger stepsWillTake = 1;
         
         //添加时间（每走一步增加时间）
-        [self->_timeNode addTime:1];
+        [self->_timeNode addTime:0.5];
         
         //添加分数
         self->_curScore += stepsWillTake;
@@ -90,39 +118,7 @@
         NSInteger columnOffset = isLeft ? -1 : 1;
         [self->_player moveToColumnOffset:columnOffset withCompletion:^(NSInteger newColumnIndex, NSInteger newRowIndex) {
             //检查碰撞
-            Ground *ground = [self->_groundNode getGroundByColumnIndex:newColumnIndex byRowIndex:newRowIndex];
-            [ground triggerObjectByPlayerType:self->_player.type withCompletion:^(TriggerType triggerType) {
-                switch (triggerType) {
-                    case TriggerTypeTimer:              //获取时间   
-                        [self->_timeNode addTime:2];
-                        break;
-                    case TriggerTypeDoubleTimer:        //获取双倍时间
-                        [self->_timeNode addTime:4];
-                        break;
-                    case TriggerTypeTwins:              //分身
-                        break;
-                    case TriggerTypeGolder:             //获取金币
-                    {
-                        NSInteger coin = [_score addCoins:1];
-                        [self->_coinItemButton setNumber:coin];
-                    }
-                        break;
-                    case TriggerTypeDoubleGolder:       //获取双倍金币
-                    {
-                        NSInteger coin = [_score addCoins:2];
-                        [self->_coinItemButton setNumber:coin];
-                    }
-                        break;
-                    case TriggerTypeMainDead:           //主体死亡
-                        [weakSelf shakeByCount:6];
-                        break;
-                    case TriggerTypeTwinsDead:          //分身死亡
-                        [weakSelf shakeByCount:3];
-                        break;
-                    default:                            //无
-                        break;
-                }
-            }];
+            [weakSelf checkCollisionWithColumnIndex:newColumnIndex withRowIndex:newRowIndex];
         }];
     };
     [self addChild:controller];
@@ -134,7 +130,7 @@
     
     //添加定时器
     _timeNode = [TimeNode node];
-    _timeNode.completeBlock = ^(BOOL stop, NSInteger curTime) {
+    _timeNode.completeBlock = ^(BOOL stop, NSTimeInterval curTime) {
         if (stop) {
             //结束
             
@@ -142,7 +138,7 @@
             [self->_score setScore:self->_curScore];            
             
             //打开菜单
-            BOOL isMenuHidden = [menuNode autoShow];            
+            BOOL isMenuHidden = [_menuNode autoShow];            
             [weakSelf startGame:isMenuHidden];
             self->_isOver = YES;                        
         }
@@ -160,7 +156,7 @@
             [self->_score setScore:self->_curScore]; 
             
             //控制菜单
-            BOOL isMenuHidden = [menuNode autoShow];
+            BOOL isMenuHidden = [self->_menuNode autoShow];
             [weakSelf startGame:isMenuHidden];
         }
     };
@@ -182,22 +178,105 @@
     [self addChild:_scoreItemButton];
 }
 
+
+///检查碰撞
+-(void)checkCollisionWithColumnIndex:(NSInteger)columnIndex withRowIndex:(NSInteger)rowIndex{
+    __weak __typeof (self)weakSelf = self;
+    
+    Ground *ground = [self->_groundNode getGroundByColumnIndex:columnIndex byRowIndex:rowIndex];
+    [ground triggerObjectByPlayerType:self->_player.type withCompletion:^(TriggerType triggerType) {
+        switch (triggerType) {
+            case TriggerTypeTimer:              //获取时间   
+            {
+                //播放音效
+                SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-26" waitForCompletion:NO];
+                [weakSelf runAction:sound];
+                
+                [self->_timeNode addTime:1];
+            }
+                break;
+            case TriggerTypeDoubleTimer:        //获取双倍时间
+            {
+                //播放音效
+                SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-26" waitForCompletion:NO];
+                [weakSelf runAction:sound];
+                
+                [self->_timeNode addTime:2];
+            }
+                break;
+            case TriggerTypeTwins:              //分身(修改为跳跃)
+                [self->_player addJumpCount:1];
+                break;
+            case TriggerTypeGolder:             //获取金币
+            {
+                //播放音效
+                SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-27" waitForCompletion:NO];
+                [weakSelf runAction:sound];
+                
+                NSInteger coin = [self->_score addCoins:1];
+                [self->_coinItemButton setNumber:coin];
+            }
+                break;
+            case TriggerTypeDoubleGolder:       //获取双倍金币
+            {
+                //播放音效
+                SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-27" waitForCompletion:NO];
+                [weakSelf runAction:sound];
+                
+                NSInteger coin = [self->_score addCoins:2];
+                [self->_coinItemButton setNumber:coin];
+            }
+                break;
+            case TriggerTypeMainDead:           //主体死亡
+            {
+                //播放音效
+                SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-18" waitForCompletion:NO];
+                [weakSelf runAction:sound];
+                
+                [weakSelf shakeByCount:5 withCompletion:^{
+                    //结束                                                        
+                    
+                    //打开菜单
+                    BOOL isMenuHidden = [self->_menuNode autoShow];            
+                    //[weakSelf startGame:isMenuHidden];
+                }];
+            }
+                break;
+            case TriggerTypeTwinsDead:          //分身死亡
+                [weakSelf shakeByCount:3 withCompletion:NULL];
+                break;
+            default:                            //无
+                break;
+        }
+    }];
+}
+
 ///场景抖动
--(void)shakeByCount:(NSInteger)count{
+-(void)shakeByCount:(NSInteger)count withCompletion: (void (^)()) completion{
+    //存储分数
+    [_score setScore:_curScore];            
+    _isOver = YES;
+    _isStart = NO;
+    
     NSMutableArray<SKAction*> *actions = [NSMutableArray array];
             
     for (NSInteger i=0; i<count; i++) {        
-        NSTimeInterval duration = 0.05 + 0.03 * (CGFloat)i;
-        SKAction *scaleOut = [SKAction scaleTo:1.1 duration:duration];
+        NSTimeInterval duration = 0.03 + 0.02 * (CGFloat)i;
+        SKAction *scaleOut = [SKAction scaleTo:1.08 duration:duration];
         scaleOut.timingMode = SKActionTimingEaseInEaseOut;        
         SKAction *scaleIn = [SKAction scaleTo:1 duration:duration];
         scaleIn.timingMode = SKActionTimingEaseInEaseOut;
         [actions addObjectsFromArray:@[scaleOut, scaleIn]];
     }
     
+    SKAction *wait = [SKAction waitForDuration:1];
+    [actions addObject:wait];
+    
     SKAction *seq = [SKAction sequence:actions];
     [_groundNode runAction:seq completion:^{
-        
+        if (completion) {
+            completion();
+        }
     }];
 }
 
@@ -212,6 +291,10 @@
 //开始/暂停游戏
 -(void)startGame:(BOOL)isRun{    
     if (_isOver) {
+        //更新角色选择
+        PlayerType playerType = [_score getPlayerType];
+        [_player changeType:playerType];
+        
         [_groundNode reset];
         [self restartGame];
     }else{        

@@ -9,7 +9,7 @@
 		<string>0</string>
 	</array>
 	<key>coins</key>
-	<integer>0</integer>
+	<integer>4000</integer>
 	<key>score</key>
 	<integer>0</integer>
 	<key>playertype</key>

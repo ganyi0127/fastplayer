@@ -6,10 +6,11 @@
 //  Copyright © 2018年 sonam. All rights reserved.
 //
 
+
 #import "Session.h"
 
-#define Host @"http://localhost:8082"
-
+#define Host @"http://192.168.199.201:8082"
+//#define Host @"http://localhost:8082"
 @implementation Session
 
 + (void)postWithParams:(NSDictionary *)params withAction:(NSString *)action withCompleteBlock:(void (^)(BOOL, NSDictionary *))completeBlock{
@@ -21,18 +22,23 @@
     
     NSURL *url = [NSURL URLWithString:urlStr];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3];
 
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     request.HTTPBody = requestData;
-    
+    //return;
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (error != NULL) {
-            NSLog(@"response数据处理错误: %@", error);
+            NSLog(@"<session>请求失败: %@", error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completeBlock(NO,NULL);
+            });
+            
+            return;
         }
         
         NSError *resultError;

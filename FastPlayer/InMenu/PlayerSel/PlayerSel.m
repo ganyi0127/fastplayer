@@ -10,6 +10,7 @@
 #import "PlayerIcon.h"
 #import "Score.h"
 #import "Config.h"
+#import "SKNode+Funcation.h"
 
 @implementation PlayerSel{
     Score *_score;
@@ -65,6 +66,11 @@
 }
 
 - (BOOL)selectOffsetIndex:(NSInteger)offsetIndex{
+    //播放音效
+    SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-03" waitForCompletion:NO];
+    [self runAction:sound];
+    
+    
     NSInteger tmp = _index + offsetIndex;
     if (tmp < 0) {
         return NO;
@@ -73,7 +79,29 @@
     }
     
     _index += offsetIndex;
-    
+        
+    //提示
+    PlayerType playerType = _index;
+    switch (playerType) {
+        case PlayerTypeNormal:
+            
+            break;
+        case PlayerTypeTimer:
+            [self showNotif:@"获取时间翻倍"];
+            break;
+        case PlayerTypeTwins:
+            [self showNotif:@"自带跳跃次数"];
+            break;
+        case PlayerTypeGolder:
+            [self showNotif:@"收获金币翻倍"];
+            break;
+        case PlayerTypeTrickster:
+            [self showNotif:@"可飞跃障碍"];
+            break;
+        default:
+            [self showNotif:@"我是小飞侠"];
+            break;
+    }
     
     //重新排列
     for (NSInteger i=0; i<_playerIconCount; i++) {
@@ -96,7 +124,9 @@
     
     
     //存储选择
-    [_score setPlayerType:_index];
+    if ([_score isUnlockWithPlayer:_index]) {        
+        [_score setPlayerType:_index];
+    }
     
     return YES;
 }

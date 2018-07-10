@@ -43,7 +43,7 @@
     _curTime = _maxTime;
     _isCount = YES;
     
-    self.position = CGPointMake(0, _config.screenTop - 200);
+    self.position = CGPointMake(0, _config.screenTop - 300);
     
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeLoop) userInfo:NULL repeats:YES];
 }
@@ -82,25 +82,25 @@
 
 //修改遮罩
 -(void)updateMask{    
-    CGFloat rate = (CGFloat)_curTime / (CGFloat)_maxTime;
-    SKAction *scaleX = [SKAction scaleXTo:rate duration:1];
+    NSTimeInterval rate = _curTime / _maxTime;
+    SKAction *scaleX = [SKAction scaleXTo:(CGFloat)rate duration:1];
     [_maskNode runAction:scaleX];
 }
 
 //回调
 -(void)callBack{    
     if (_completeBlock) {        
-        _completeBlock(_curTime == 0, _curTime);
+        _completeBlock(_curTime <= 0, _curTime);
     }
     
-    if (_curTime == 0) {
+    if (_curTime <= 0) {
         [self startCount:NO];
     }else{
         [self startCount:YES];
     }
 }
 
-- (void)setTime:(NSInteger)time{
+- (void)setTime:(NSTimeInterval)time{
     _curTime = time;
     
     if (_maxTime < _curTime) {
@@ -113,12 +113,12 @@
     [self callBack];
 }
 
-- (void)setMaxTime:(NSInteger)maxTime{
+- (void)setMaxTime:(NSTimeInterval)maxTime{
     [self updateMask];
     _maxTime = maxTime;
 }
 
-- (void)addTime:(NSInteger)subTime{
+- (void)addTime:(NSTimeInterval)subTime{
     _curTime += subTime;
     if (_maxTime < _curTime) {
         _maxTime = _curTime;

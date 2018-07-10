@@ -28,4 +28,9 @@ typedef NS_OPTIONS(NSUInteger, SonamButtonType) {
 
 + (SonamButton*)button: (NSArray<SKTexture*>*)textures;
 - (id)init: (NSArray *)textures;
+
+-(void)config;
+- (void)createContents;
+
+- (void)setSonamButtonType: (SonamButtonType) sonamButtonType;
 @end

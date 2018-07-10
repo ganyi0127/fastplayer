@@ -51,7 +51,7 @@
     [self addChild:_item];
     
     //添加sonamNumberLabel
-    _sonamNumberLabel = [SonamNumberLabel numberLabel];
+    _sonamNumberLabel = [SonamNumberLabel numberLabelWithNumberHeight:40];
     [self addChild:_sonamNumberLabel];
     
     //更新ui 
@@ -95,7 +95,7 @@
 //获取sonamNumberLabel位置
 -(CGPoint)getSonamNumberLabelNewPosition{
     CGRect sonamNumberLabelRect = [_sonamNumberLabel calculateAccumulatedFrame];
-    CGFloat posX = sonamNumberLabelRect.size.width / 2 + 16;
+    CGFloat posX = sonamNumberLabelRect.size.width / 2 + 32;
     return CGPointMake(posX, 0);
 }
 @end

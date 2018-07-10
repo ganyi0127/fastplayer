@@ -23,8 +23,19 @@ typedef NS_ENUM(NSInteger,PlayerType) {
 @property (assign, nonatomic, readonly) PlayerType type;
 @property (assign, nonatomic, readonly) BOOL canMove;
 
+
+//跳跃
+@property (assign, nonatomic, readonly) NSInteger jumpCount;
+@property (copy, nonatomic) void (^jumpBlock)(BOOL isLeftJump);
+
 +(Player*)nodeWithType:(PlayerType)type;
 
 -(void)moveToColumnOffset:(NSInteger)columnOffset withCompletion:(void (^)(NSInteger newColumnIndex, NSInteger newRowIndex)) completion;
+
+//更换类型
+- (void)changeType:(PlayerType)playerType;
+
+///加跳跃次数
+-(void)addJumpCount:(NSInteger)subCount;
 
 @end

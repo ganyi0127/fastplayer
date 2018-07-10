@@ -30,13 +30,16 @@
 -(NSInteger)setCoins:(NSInteger)coins;
 ///修改当前金币
 -(NSInteger)addCoins:(NSInteger)subCoins;
+///获取价格
+-(NSInteger)getPriceFromPlayerType:(PlayerType)playerType;
 
 ///获取当前选择的角色
 -(PlayerType)getPlayerType;
 ///设置当前选择的角色
 -(PlayerType)setPlayerType:(PlayerType)playerType;
 
-
+///判断角色是否已解锁
+-(BOOL)isUnlockWithPlayer:(PlayerType)playerType;
 ///解锁玩家
 -(BOOL)unlockPlayer:(PlayerType)playerType;
 

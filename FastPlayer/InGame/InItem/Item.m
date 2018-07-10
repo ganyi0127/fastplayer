@@ -50,7 +50,15 @@
             idleTextureName = @"item_timer_";
             idleCount = 4;
             clearCount = 0;
+            break;
+        case GroundTypeTwins:
+            idleTextureName = @"item_twins_";
+            idleCount = 5;
+            clearCount = 0;
+            break;
         default:
+            idleCount = 0;
+            clearCount = 0;
             break;
     }
     
@@ -102,6 +110,12 @@
             break;
         case GroundTypeTwins:                   //分身
             //播放闪烁动画
+        {
+            SKAction *anim = [SKAction animateWithTextures:_idleTextures timePerFrame:0.2 resize:NO restore:NO];
+            SKAction *animForever = [SKAction repeatActionForever:anim];
+            [self runAction:animForever];
+        }
+            [self setScale:0.5];
             break;
         case GroundTypeGolder:                  //金币
             //播放闪耀动画
@@ -144,6 +158,7 @@
             }else{
                 SKAction *anim = [SKAction animateWithTextures:_clearTextures timePerFrame:0.1 resize:NO restore:NO];
                 [self runAction:anim];
+                completeBlock(YES);
             }            
             break;
         case GroundTypeTimer:                   //时间
@@ -176,6 +191,23 @@
             }else{
                 
             }
+            
+        {
+            self.zPosition = hugeZPostion;
+            NSTimeInterval duration = 0.5;
+            SKAction *scaleOut = [SKAction scaleTo:2 duration:duration];
+            scaleOut.timingMode = SKActionTimingEaseOut;
+            SKAction *fadeOut = [SKAction fadeOutWithDuration:duration];
+            fadeOut.timingMode = SKActionTimingEaseOut;
+            SKAction *group = [SKAction group:@[scaleOut,fadeOut]];
+            SKAction *remove = [SKAction removeFromParent];
+            SKAction *seq = [SKAction sequence:@[group,remove]];
+            
+            [self runAction:seq completion:^{
+                completeBlock(YES);
+            }];
+        }  
+            
             break;
         case GroundTypeGolder:                  //金币
             //移动到金币栏 然后消失
@@ -186,8 +218,8 @@
                 
             }
             [self removeAllActions];
-            self.zPosition = 100;
-            NSTimeInterval duration = hugeZPostion;
+            self.zPosition = hugeZPostion;
+            NSTimeInterval duration = 0.2;
             CGPoint targetPosition = CGPointMake(_config.screenRight - 50, _config.screenTop - 50);
             CGPoint targetPositionInScene = [self.parent.parent convertPoint:targetPosition fromNode:self];
             SKAction *move = [SKAction moveTo:targetPositionInScene duration:duration];

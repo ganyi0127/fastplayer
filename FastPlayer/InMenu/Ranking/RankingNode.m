@@ -11,6 +11,7 @@
 #import "RankingCell.h"
 #import "Session+Post.h"
 #import "Config.h"
+#import "SKNode+Funcation.h"
 
 @implementation RankingNode{
     Config *_config;
@@ -68,10 +69,11 @@
 -(void)createContents{
     
     _cropNode = [SKCropNode node];
+    SKTexture *maskTexture = [SKTexture textureWithImageNamed:@"mask_ranking"];
+    SKSpriteNode *mask = [SKSpriteNode spriteNodeWithTexture:maskTexture];
+    _cropNode.maskNode = mask;
     [self addChild:_cropNode];
     
-    SKSpriteNode *mask = [SKSpriteNode spriteNodeWithColor:UIColor.whiteColor size:self.size];
-    _cropNode.maskNode = mask;
 }
 
 #pragma mark 获取数据
@@ -96,6 +98,14 @@
     
     //获取数据
     [Session getListWithPage:_page CompleteBlock:^(BOOL successed, NSDictionary *result) {   
+        if (!successed) {
+            [weakSelf showNotif:@"获取数据失败"];
+            //回调
+            if (completeBlock) {
+                completeBlock(NO,@"获取数据失败");
+            }
+            return;
+        }
         NSString *message = [result objectForKey:@"message"];
         NSDictionary *data = [result objectForKey:@"data"];
         
@@ -107,21 +117,17 @@
         }
         
         //请求数据成功处理
-        if (successed) {
-            NSArray *list = [data objectForKey:@"result"];
-            NSNumber *newPageNumber = [data objectForKey:@"page"];
-            NSNumber *limitNumber = [data objectForKey:@"limit"];        
-            
-            self->_page = newPageNumber.integerValue;
-            
-            [weakSelf addCellData:list];
-        }else{
-            
-        }        
+        NSArray *list = [data objectForKey:@"result"];
+        NSNumber *newPageNumber = [data objectForKey:@"page"];
+        NSNumber *limitNumber = [data objectForKey:@"limit"];        
+        
+        self->_page = newPageNumber.integerValue;
+        
+        [weakSelf addCellData:list];       
         
         //回调
         if (completeBlock) {
-            completeBlock(successed,message);
+            completeBlock(YES,message);
         }
     }];  
 }
@@ -157,7 +163,6 @@
         //[self addChild:cell];
         [_cropNode addChild:cell];
         [_cellList addObject:cell];
-        
     }            
 }
 
@@ -228,12 +233,16 @@
     if (firstCell.position.y < topY) {
         _offset = 0;
         [self cellListScrollBy:_offset];
+        
+        [self updateDataByNew:YES WithCompleteBlock:NULL];
     }else {
         if (totalCellHeight > self.size.height) {
             if (lastCell.position.y > bottomY) {
                 _offset = totalCellHeight - self.size.height;
                 [self cellListScrollBy:_offset];
             }
+            
+            [self updateDataByNew:NO WithCompleteBlock:NULL];
         }else{
             _offset = 0;
             [self cellListScrollBy:_offset];

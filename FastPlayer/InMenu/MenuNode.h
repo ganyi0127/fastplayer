@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "GameScene.h"
 
 @interface MenuNode : SKNode
 
@@ -21,4 +22,5 @@
 //选择操作
 -(void)selectPlayerByDirection:(BOOL)isLeftDirection;
 
+-(void)setTextField:(GameScene*)scene;
 @end

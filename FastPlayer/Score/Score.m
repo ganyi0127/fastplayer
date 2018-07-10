@@ -7,6 +7,7 @@
 //
 
 #import "Score.h"
+#import "NSArray+Funcation.h"
 
 @implementation Score{
     NSString *_fileName;
@@ -87,7 +88,15 @@ static Score *_instance = nil;
 
 - (NSInteger)setScore:(NSInteger)score{  
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self readDocument]];
-    NSNumber *object = [NSNumber numberWithInteger:score];
+    
+    NSInteger oldScore = ((NSNumber*)[dic objectForKey:_scoreKey]).integerValue;
+    
+    if (score < oldScore) {
+        return oldScore;
+    }
+    
+    NSNumber *object = [NSNumber numberWithInteger:score];    
+    
     [dic setObject:object forKey:_scoreKey];
     [dic writeToFile:[self documentPath] atomically:YES];
     return score;
@@ -171,6 +180,19 @@ static Score *_instance = nil;
 
 
 #pragma mark 解锁角色
+- (BOOL)isUnlockWithPlayer:(PlayerType)playerType{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self readDocument]];
+    NSArray<NSNumber*> *unlockplayerList = (NSArray*)[dic objectForKey:_unlockplayersKey];    
+    
+    for (NSNumber *number in unlockplayerList) {
+        if (number.integerValue == playerType) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (BOOL)unlockPlayer:(PlayerType)playerType{
     NSInteger icons = [self getCoins];
     NSInteger price = [self getPriceFromPlayerType:playerType];
@@ -182,8 +204,10 @@ static Score *_instance = nil;
     NSMutableArray<NSNumber*> *unlockplayerList = [NSMutableArray arrayWithArray:(NSArray*)[dic objectForKey:_unlockplayersKey]];
     
     //判断是否已解锁
-    if ([unlockplayerList containsObject:[NSNumber numberWithInteger:playerType]]) {
-        return NO;
+    for (NSNumber *number in unlockplayerList) {
+        if (number.integerValue == playerType) {
+            return NO;
+        }
     }
     
     [unlockplayerList addObject:[NSNumber numberWithInteger:playerType]];
@@ -201,7 +225,7 @@ static Score *_instance = nil;
         case PlayerTypeTimer:
             return 200;
         case PlayerTypeTwins:
-            return 1000;
+            return 20000;
         case PlayerTypeGolder:
             return 3000;
         case PlayerTypeTrickster:

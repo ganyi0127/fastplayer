@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B8758D8E20F3B1DB004215B1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8758D8D20F3B1DB004215B1 /* AVFoundation.framework */; };
+		B8758D9320F3B734004215B1 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = B8758D9120F3B734004215B1 /* sound */; };
+		B8758D9420F3B734004215B1 /* music in Resources */ = {isa = PBXBuildFile; fileRef = B8758D9220F3B734004215B1 /* music */; };
 		B89DED6D20E8A9A900A505D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DED6C20E8A9A900A505D0 /* AppDelegate.m */; };
 		B89DED6F20E8A9A900A505D0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B89DED6E20E8A9A900A505D0 /* GameScene.sks */; };
 		B89DED7120E8A9A900A505D0 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B89DED7020E8A9A900A505D0 /* Actions.sks */; };
@@ -83,6 +86,7 @@
 		B89DEEF520F1F87100A505D0 /* RankingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEF420F1F87100A505D0 /* RankingCell.m */; };
 		B89DEEF820F1FA2400A505D0 /* Star.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEF720F1FA2400A505D0 /* Star.m */; };
 		B89DEEFB20F1FCAC00A505D0 /* RankingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEFA20F1FCAC00A505D0 /* RankingModel.m */; };
+		B89DEEFE20F3399600A505D0 /* SKNode+Funcation.m in Sources */ = {isa = PBXBuildFile; fileRef = B89DEEFD20F3399600A505D0 /* SKNode+Funcation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +107,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B8758D8420F39CD1004215B1 /* FastPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastPlayer.entitlements; sourceTree = "<group>"; };
+		B8758D8D20F3B1DB004215B1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B8758D9120F3B734004215B1 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sound; sourceTree = "<group>"; };
+		B8758D9220F3B734004215B1 /* music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = music; sourceTree = "<group>"; };
 		B89DED6820E8A9A900A505D0 /* FastPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B89DED6B20E8A9A900A505D0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B89DED6C20E8A9A900A505D0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -242,6 +250,8 @@
 		B89DEEF720F1FA2400A505D0 /* Star.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Star.m; sourceTree = "<group>"; };
 		B89DEEF920F1FCAC00A505D0 /* RankingModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RankingModel.h; sourceTree = "<group>"; };
 		B89DEEFA20F1FCAC00A505D0 /* RankingModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankingModel.m; sourceTree = "<group>"; };
+		B89DEEFC20F3399600A505D0 /* SKNode+Funcation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SKNode+Funcation.h"; sourceTree = "<group>"; };
+		B89DEEFD20F3399600A505D0 /* SKNode+Funcation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SKNode+Funcation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8758D8E20F3B1DB004215B1 /* AVFoundation.framework in Frameworks */,
 				B89DEEC420EA13BC00A505D0 /* libresolv.tbd in Frameworks */,
 				B89DEEC220EA13B200A505D0 /* libc++.tbd in Frameworks */,
 				B89DEEC020EA13A600A505D0 /* UserNotifications.framework in Frameworks */,
@@ -308,6 +319,7 @@
 		B89DED6A20E8A9A900A505D0 /* FastPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				B8758D8420F39CD1004215B1 /* FastPlayer.entitlements */,
 				B89DEDF120E8AA7300A505D0 /* JPUSH */,
 				B89DEDF820E8AA7400A505D0 /* UMENG */,
 				B89DEED720ECFDFF00A505D0 /* NetWork */,
@@ -352,6 +364,8 @@
 				B89DED7620E8A9A900A505D0 /* GameViewController.m */,
 				B89DED7020E8A9A900A505D0 /* Actions.sks */,
 				B89DED7820E8A9A900A505D0 /* Main.storyboard */,
+				B8758D9220F3B734004215B1 /* music */,
+				B8758D9120F3B734004215B1 /* sound */,
 				B89DED7B20E8A9AB00A505D0 /* Assets.xcassets */,
 				B89DED7D20E8A9AB00A505D0 /* LaunchScreen.storyboard */,
 				B89DED8020E8A9AB00A505D0 /* Info.plist */,
@@ -567,6 +581,8 @@
 			children = (
 				B89DEE1820E8ADBC00A505D0 /* NSArray+Funcation.h */,
 				B89DEE1920E8ADBC00A505D0 /* NSArray+Funcation.m */,
+				B89DEEFC20F3399600A505D0 /* SKNode+Funcation.h */,
+				B89DEEFD20F3399600A505D0 /* SKNode+Funcation.m */,
 			);
 			path = Catagory;
 			sourceTree = "<group>";
@@ -650,6 +666,7 @@
 		B89DEEB820EA137000A505D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B8758D8D20F3B1DB004215B1 /* AVFoundation.framework */,
 				B89DEEC320EA13BC00A505D0 /* libresolv.tbd */,
 				B89DEEC120EA13B200A505D0 /* libc++.tbd */,
 				B89DEEBF20EA13A600A505D0 /* UserNotifications.framework */,
@@ -784,6 +801,11 @@
 				TargetAttributes = {
 					B89DED6720E8A9A900A505D0 = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					B89DED8620E8A9AC00A505D0 = {
 						CreatedOnToolsVersion = 9.3;
@@ -820,6 +842,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8758D9420F3B734004215B1 /* music in Resources */,
 				B89DED7A20E8A9A900A505D0 /* Main.storyboard in Resources */,
 				B89DEDE520E8AA4F00A505D0 /* XMBundle.bundle in Resources */,
 				B89DEDE420E8AA4F00A505D0 /* SVProgressHUD.bundle in Resources */,
@@ -828,6 +851,7 @@
 				B89DED7F20E8A9AB00A505D0 /* LaunchScreen.storyboard in Resources */,
 				B89DED7120E8A9A900A505D0 /* Actions.sks in Resources */,
 				B89DEE0C20E8AA7400A505D0 /* UMCommonLog.bundle in Resources */,
+				B8758D9320F3B734004215B1 /* sound in Resources */,
 				B89DEE2420E8ADBC00A505D0 /* Score.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -903,6 +927,7 @@
 				B89DEDE020E8AA4F00A505D0 /* SVRadialGradientLayer.m in Sources */,
 				B89DEDE120E8AA4F00A505D0 /* SVProgressAnimatedView.m in Sources */,
 				B89DEDEC20E8AA4F00A505D0 /* View+MASAdditions.m in Sources */,
+				B89DEEFE20F3399600A505D0 /* SKNode+Funcation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,6 +1096,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FastPlayer/FastPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3T83XX7ZDD;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1101,6 +1127,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FastPlayer/FastPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3T83XX7ZDD;
 				FRAMEWORK_SEARCH_PATHS = (

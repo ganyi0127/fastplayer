@@ -13,7 +13,7 @@
 @property(nonatomic,assign) NSInteger scoreNumber;
 @property(assign, nonatomic) CGFloat numberScale;
 
-+(SonamNumberLabel*)numberLabel;
++(SonamNumberLabel*)numberLabelWithNumberHeight:(CGFloat)numberHeight;
 
 -(void)clearCounter;
 -(void)setScoreNumber:(NSInteger)scoreNumber;

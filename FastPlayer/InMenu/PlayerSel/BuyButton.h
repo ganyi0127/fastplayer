@@ -12,6 +12,8 @@
 
 @interface BuyButton : SonamButton
 
+@property (assign, nonatomic) PlayerType playerType;
+
 ///修改价格
 -(void)changePlayerTypeOfPrice:(PlayerType)playerType;
 
