@@ -111,6 +111,7 @@
 -(SKTexture*)updateTexturesWithType:(PlayerType)type{
     NSString *textureName = @"";
     NSInteger count = 2;
+    
     switch (type) {
         case PlayerTypeNormal:
             textureName = @"player_normal_";
@@ -120,6 +121,9 @@
             break;
         case PlayerTypeTwins:
             textureName = @"player_twins_";
+            textureName = @"player_ball_";
+            count = 4;
+            
             break;
         case PlayerTypeGolder:
             textureName = @"player_golder_";
@@ -149,7 +153,7 @@
         return;
     }
     
-    _type = playerType;
+    _type = playerType;    
     
     self.texture = [self updateTexturesWithType:_type];
     

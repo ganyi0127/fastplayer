@@ -265,7 +265,7 @@
     
     //textField动画
     [UIView animateWithDuration:0.2 animations:^{
-        [self->_usernameField setFrame:isShow ? _usernameShowRect : _usernameHiddenRect];
+        [self->_usernameField setFrame:isShow ? self->_usernameShowRect : self->_usernameHiddenRect];
     }];
     
     

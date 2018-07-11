@@ -43,7 +43,7 @@
     _curTime = _maxTime;
     _isCount = YES;
     
-    self.position = CGPointMake(0, _config.screenTop - 300);
+    self.position = CGPointMake(0, _config.screenTop - 380);
     
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeLoop) userInfo:NULL repeats:YES];
 }

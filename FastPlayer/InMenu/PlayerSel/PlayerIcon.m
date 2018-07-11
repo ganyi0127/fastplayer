@@ -35,7 +35,9 @@
             break;
         case PlayerTypeTwins:
             textureName = @"playerIcon_twins_";
+            textureName = @"playerIcon_ball_";
             count = 3;
+            count = 4;
             break;
         default:
             textureName = @"playerIcon_trickster_";

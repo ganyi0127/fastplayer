@@ -40,10 +40,10 @@
             itemTextureName = @"item_coin";
             break;
         case ItemButtonTypeScore:
-            itemTextureName = @"";
+            itemTextureName = @"item_score";
             break;            
         default:
-            itemTextureName = @"";
+            itemTextureName = @"item_highscore";
             break;
     }
     SKTexture *itemTexture = [SKTexture textureWithImageNamed:itemTextureName];
@@ -95,7 +95,7 @@
 //获取sonamNumberLabel位置
 -(CGPoint)getSonamNumberLabelNewPosition{
     CGRect sonamNumberLabelRect = [_sonamNumberLabel calculateAccumulatedFrame];
-    CGFloat posX = sonamNumberLabelRect.size.width / 2 + 32;
+    CGFloat posX = sonamNumberLabelRect.size.width / 2 + 64;
     return CGPointMake(posX, 0);
 }
 @end

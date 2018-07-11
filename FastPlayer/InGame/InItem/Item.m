@@ -39,11 +39,11 @@
             idleTextureName = @"item_trickster_";
             idleCount = 1;
             clearTextureName = @"item_trickster_";
-            clearCount = 13;
+            clearCount = 1; //13;
             break;
         case GroundTypePlayer:
-            idleTextureName = @"item_normal_";
-            idleCount = 4;
+            idleTextureName = @"item_normal_player_";
+            idleCount = 2;
             clearCount = 0;
             break;
         case GroundTypeTimer:
@@ -140,7 +140,7 @@
             SKAction *animForever = [SKAction repeatActionForever:anim];
             [self runAction:animForever];
         }
-            [self setScale:0.5];
+            [self setScale:0.4];
             break;
         default:                                //无
             break;

@@ -138,7 +138,7 @@
             [self->_score setScore:self->_curScore];            
             
             //打开菜单
-            BOOL isMenuHidden = [_menuNode autoShow];            
+            BOOL isMenuHidden = [self->_menuNode autoShow];            
             [weakSelf startGame:isMenuHidden];
             self->_isOver = YES;                        
         }
@@ -162,18 +162,18 @@
     };
     [self addChild:menuButton];
     
-    CGFloat itemButtonPosX = _config.screenRight - 200;
+    CGFloat itemButtonPosX = _config.screenRight - 300;
     
     //添加金币按钮
     _coinItemButton = [ItemButton nodeWithButtonType:ItemButtonTypeCoins];
-    _coinItemButton.position = CGPointMake(itemButtonPosX, _config.screenTop - 120);
+    _coinItemButton.position = CGPointMake(itemButtonPosX, _config.screenTop - 150);
     NSInteger coins = [_score getCoins];
     [_coinItemButton setNumber:coins];
     [self addChild:_coinItemButton];
     
     //添加分数按钮
     _scoreItemButton = [ItemButton nodeWithButtonType:ItemButtonTypeScore];
-    _scoreItemButton.position = CGPointMake(itemButtonPosX, _coinItemButton.position.y - 150);
+    _scoreItemButton.position = CGPointMake(itemButtonPosX, _coinItemButton.position.y - 130);
     [_scoreItemButton setNumber:0];
     [self addChild:_scoreItemButton];
 }
