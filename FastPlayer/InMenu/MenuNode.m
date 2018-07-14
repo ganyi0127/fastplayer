@@ -155,7 +155,7 @@
         
         [weakSelf switchLayer:enable withInit:NO];
     };
-    [self addChild:_rankingButton];
+    //[self addChild:_rankingButton];
     
     
     

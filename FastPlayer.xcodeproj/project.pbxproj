@@ -1100,6 +1100,7 @@
 				CODE_SIGN_ENTITLEMENTS = FastPlayer/FastPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R4A9GHTW69;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FastPlayer/SupportingFiles",
@@ -1120,7 +1121,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.biying.FastPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1132,6 +1133,7 @@
 				CODE_SIGN_ENTITLEMENTS = FastPlayer/FastPlayer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R4A9GHTW69;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FastPlayer/SupportingFiles",
@@ -1152,7 +1154,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.biying.FastPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
