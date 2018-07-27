@@ -47,6 +47,10 @@
     SKNode *_rankingLayer;
 }
 
++ (instancetype)node{
+    return [[self alloc] init];
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -117,7 +121,7 @@
 }
 
 -(void)createContents{
-    __weak typeof (self)weakSelf = self;
+    __weak __typeof__(self) weakSelf = self;
     
     //添加背景
     SKTexture *bgTexture = [SKTexture textureWithImageNamed:@"bg_menu"];
@@ -132,12 +136,13 @@
     _startButton.position = CGPointMake(0, -bg.size.height / 2);
     _startButton.completeBlock = ^(Boolean enable) {
         if (enable) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
             //播放音效
             SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-31" waitForCompletion:NO];
-            [weakSelf runAction:sound];
+            [strongSelf runAction:sound];
             
-            [weakSelf show:false];
-            [(GameScene*)self.parent startGame:true];            
+            [strongSelf show:false];
+            [(GameScene*)strongSelf.parent startGame:true];            
         }
     };
     [self addChild:_startButton];
@@ -149,11 +154,12 @@
     _rankingButton.position = CGPointMake(_config.screenLeft + 180, _config.menuSize.height / 2 - 270);
     _rankingButton.canSelected = YES;
     _rankingButton.completeBlock = ^(Boolean enable) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         //播放音效
         SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-25" waitForCompletion:NO];
-        [weakSelf runAction:sound];
+        [strongSelf runAction:sound];
         
-        [weakSelf switchLayer:enable withInit:NO];
+        [strongSelf switchLayer:enable withInit:NO];
     };
     //[self addChild:_rankingButton];
     
@@ -182,11 +188,12 @@
     _buyButton.hidden = [_score isUnlockWithPlayer:[_score getPlayerType]];
     [_buyButton changePlayerTypeOfPrice:[_score getPlayerType]];
     _buyButton.completeBlock = ^(Boolean enable) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         if (enable) {
-            self->_buyButton.hidden = YES;
-            [weakSelf showNotif:@"购买成功"];
+            strongSelf->_buyButton.hidden = YES;
+            [strongSelf showNotif:@"购买成功"];
         }else{
-            [weakSelf showNotif:@"金币不足"];
+            [strongSelf showNotif:@"金币不足"];
         }
     };
     [_menuLayer addChild:_buyButton];

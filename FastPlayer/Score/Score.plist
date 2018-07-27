@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>username</key>
-	<string>unnamed player</string>
+	<string>player</string>
 	<key>unlockplayers</key>
 	<array>
 		<string>0</string>
 	</array>
 	<key>coins</key>
-	<integer>4000</integer>
+	<integer>0</integer>
 	<key>score</key>
 	<integer>0</integer>
 	<key>playertype</key>

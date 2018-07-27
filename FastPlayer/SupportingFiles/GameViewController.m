@@ -16,24 +16,31 @@
 
 @implementation GameViewController{
     BOOL _isMyModelType;
+    UIImageView *_imageView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    GameModel *model=[[GameModel alloc]init];
-    model.ModelDelegate=self;
-    //参数解释 gametype 如果不是Leisure time 就需要你自己去写UIwebview 加载界面
-    //MyGame 为你的游戏链接
-    //isLand==1 你的游戏强制横屏 不等于1 则不强制横屏
-    [model getModel:@{@"gametype":@"Leisure time2",@"MyGame":@"https://www.baidu.com",@"isLand":@2}];
+//    _imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+//    [self.view addSubview:_imageView];
+//    
+//                
+//    GameModel *model=[[GameModel alloc]init];
+//    model.ModelDelegate=self;
+//    [model getModel:@{@"gametype":@"Leisure time2",@"MyGame":@"",@"isLand":@2}];
+    
+    [self loadGame];
 }
 
-- (void)GameStateStr:(NSString *)States{
-    if ([States containsString:@"授权成功"]) {        
-        [self loadGame]; 
-    }
-}
+//- (void)GameStateStr:(NSString *)States{
+//    if ([States containsString:@"授权成功"]) {   
+//        [_imageView removeFromSuperview];
+//        _isMyModelType = YES;
+//        [self loadGame]; 
+//    }
+//    
+//}
 
 -(void)loadGame{    
     _isMyModelType = YES;
@@ -44,7 +51,7 @@
     SKView *skView = (SKView *)self.view;    
     [skView presentScene:scene];  
     
-    [skView setShowsNodeCount:YES];
+    //[skView setShowsNodeCount:YES];
 }
 
 - (BOOL)shouldAutorotate {

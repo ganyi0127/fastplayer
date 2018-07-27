@@ -14,7 +14,7 @@
 @implementation Session
 
 + (void)postWithParams:(NSDictionary *)params withAction:(NSString *)action withCompleteBlock:(void (^)(BOOL, NSDictionary *))completeBlock{
-    
+    return;
     NSError *error;
     NSData *requestData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
 

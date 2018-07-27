@@ -65,7 +65,6 @@
 }
 
 -(void)createContents{
-    __weak __typeof (self) weakSelf = self;
     
     _groundNode = [GroundNode node];
     [self addChild:_groundNode];
@@ -76,49 +75,50 @@
     [_menuNode setTextField:self];
     
     Controller *controller = [Controller node];
-    //__weak Player *weakPlayer = _player;
+
+    __weak __typeof__(self) weakSelf = self;
     controller.completeBlock = ^(BOOL isLeft) {         //操作移动  
-        
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
         
         //判断是否已开启游戏
         if (!self.isStart) {
             //控制菜单
-            [self->_menuNode selectPlayerByDirection:isLeft];
+            [strongSelf->_menuNode selectPlayerByDirection:isLeft];
             return;
         }
         
         
         //播放音效
         SKAction *sound = [SKAction playSoundFileNamed:@"sound/DM-CGS-07" waitForCompletion:NO];
-        [self runAction:sound];
+        [strongSelf runAction:sound];
         
-        if (self.isOver) {
+        if (strongSelf.isOver) {
             return;
         }
         
         //判断是否可以移动
-        if (![self->_groundNet canPlayerMoveBySteps:isLeft ? -1 : 1] || !(self->_player.canMove)) {
+        if (![strongSelf->_groundNet canPlayerMoveBySteps:isLeft ? -1 : 1] || !(strongSelf->_player.canMove)) {
             return;
         }
         
         NSInteger stepsWillTake = 1;
         
         //添加时间（每走一步增加时间）
-        [self->_timeNode addTime:0.5];
+        [strongSelf->_timeNode addTime:0.5];
         
         //添加分数
-        self->_curScore += stepsWillTake;
-        [self->_scoreItemButton setNumber:self->_curScore];
+        strongSelf->_curScore += stepsWillTake;
+        [strongSelf->_scoreItemButton setNumber:self->_curScore];
         
         
         //移动背景
-        [self->_groundNode takeStep:stepsWillTake];
+        [strongSelf->_groundNode takeStep:stepsWillTake];
                 
         //移动角色
         NSInteger columnOffset = isLeft ? -1 : 1;
-        [self->_player moveToColumnOffset:columnOffset withCompletion:^(NSInteger newColumnIndex, NSInteger newRowIndex) {
+        [strongSelf->_player moveToColumnOffset:columnOffset withCompletion:^(NSInteger newColumnIndex, NSInteger newRowIndex) {
             //检查碰撞
-            [weakSelf checkCollisionWithColumnIndex:newColumnIndex withRowIndex:newRowIndex];
+            [strongSelf checkCollisionWithColumnIndex:newColumnIndex withRowIndex:newRowIndex];
         }];
     };
     [self addChild:controller];
@@ -132,15 +132,16 @@
     _timeNode = [TimeNode node];
     _timeNode.completeBlock = ^(BOOL stop, NSTimeInterval curTime) {
         if (stop) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
             //结束
             
             //存储分数
-            [self->_score setScore:self->_curScore];            
+            [strongSelf->_score setScore:strongSelf->_curScore];            
             
             //打开菜单
-            BOOL isMenuHidden = [self->_menuNode autoShow];            
-            [weakSelf startGame:isMenuHidden];
-            self->_isOver = YES;                        
+            BOOL isMenuHidden = [strongSelf->_menuNode autoShow];            
+            [strongSelf startGame:isMenuHidden];
+            strongSelf->_isOver = YES;                        
         }
     };
     [self addChild:_timeNode];    
@@ -152,12 +153,14 @@
     menuButton.position = CGPointMake(_config.screenLeft + 120, _config.screenTop - 150);
     menuButton.completeBlock = ^(Boolean enable) {
         if (enable) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            
             //存储分数
-            [self->_score setScore:self->_curScore]; 
+            [strongSelf->_score setScore:strongSelf->_curScore]; 
             
             //控制菜单
-            BOOL isMenuHidden = [self->_menuNode autoShow];
-            [weakSelf startGame:isMenuHidden];
+            BOOL isMenuHidden = [strongSelf->_menuNode autoShow];
+            [strongSelf startGame:isMenuHidden];
         }
     };
     [self addChild:menuButton];
